@@ -1,5 +1,6 @@
 package com.kotlang.minion.flockHandler
 
+import co.flock.FlockApiClient
 import com.kotlang.minion.models.UserToken
 import com.kotlang.minion.repositories.UserTokenRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory
 
 /**
  * Created by sainageswar on 08/01/17.
+ * Handles all flock requests
  */
 @Component
 class Router(@Autowired val userTokenRepository: UserTokenRepository) {
@@ -27,6 +29,13 @@ class Router(@Autowired val userTokenRepository: UserTokenRepository) {
                 "app.uninstall" -> {
                     log.info("Removing user token")
                     userTokenRepository.delete(request["userId"] as String)
+                }
+
+                "client.messageAction" -> {
+                    val userToken = userTokenRepository.findOne(request["userId"] as String)
+                    val flockApiClient = FlockApiClient(userToken.token)
+
+//                    flockApiClient.
                 }
             }
         }

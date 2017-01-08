@@ -1,8 +1,5 @@
 package com.kotlang.minion.controllers
 
-import co.flock.model.event.FlockEvent
-import co.flock.model.event.SlashCommand
-import co.flock.model.message.Message
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kotlang.minion.flockHandler.Router
 import org.slf4j.LoggerFactory
