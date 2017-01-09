@@ -36,9 +36,9 @@ class FlockController(@Autowired val router: Router) {
 
     @Bean
     fun jacksonBuilder(): Jackson2ObjectMapperBuilder {
-        val b = Jackson2ObjectMapperBuilder()
-        b.indentOutput(true).mixIn(FlockEvent::class.java, FlockEventMixin::class.java)
-        return b
+        val mapper = Jackson2ObjectMapperBuilder()
+        mapper.indentOutput(true).mixIn(FlockEvent::class.java, FlockEventMixin::class.java)
+        return mapper
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
