@@ -1,9 +1,9 @@
 package com.kotlang.minion.flockHandler
 
-import co.flock.FlockApiClient
 import co.flock.model.event.AppInstall
 import co.flock.model.event.AppUnInstall
 import co.flock.model.event.FlockEvent
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.kotlang.minion.beans.MessageAction
 import com.kotlang.minion.models.UserToken
 import com.kotlang.minion.repositories.UserTokenRepository
@@ -36,9 +36,12 @@ class Router(@Autowired val userTokenRepository: UserTokenRepository) {
 
                 is MessageAction -> {
                     val userToken = userTokenRepository.findOne(request.userId)
-                    val flockApiClient = FlockApiClient(userToken.token)
+                    val flockApiClient = UniFlockApiClient(userToken.token)
 
-//                    flockApiClient.
+                    val messages = flockApiClient.fetchMessages(chat = request.chat,
+                            uids = request.messageUids)
+                    log.info("Messages are : \n" + ObjectMapper().writerWithDefaultPrettyPrinter()
+                            .writeValueAsString(messages))
                 }
             }
         }

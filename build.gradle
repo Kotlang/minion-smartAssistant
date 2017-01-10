@@ -47,6 +47,14 @@ dependencies {
 	runtime group: 'com.ning', name: 'async-http-client', version: '1.9.40'
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson
 	runtime group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
+	// https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java
+
+	compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
+	runtime group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.6'
+	runtime group: 'org.apache.httpcomponents', name: 'httpasyncclient', version: '4.0.2'
+	runtime group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.6'
+	runtime group: 'org.json', name: 'json', version: '20140107'
+
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
