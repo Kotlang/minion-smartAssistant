@@ -38,11 +38,10 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
 	compile name: "co.flock.www-1.0-SNAPSHOT"
-	runtime('org.postgresql:postgresql')
+	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
 	// https://mvnrepository.com/artifact/com.ning/async-http-client
 	runtime group: 'com.ning', name: 'async-http-client', version: '1.9.40'
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson

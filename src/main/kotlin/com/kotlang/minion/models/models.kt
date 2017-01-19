@@ -1,14 +1,20 @@
 package com.kotlang.minion.models
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
+import org.springframework.data.annotation.Id
+import org.springframework.data.elasticsearch.annotations.Document
 
 /**
  * Created by sainageswar on 08/01/17.
  */
-@Entity
+@Document(indexName = "minion", type = "UserToken")
 class UserToken(
         @Id var userId: String = "",
-        @Column(length = 150) var token: String = ""
+        var token: String = ""
+)
+
+@Document(indexName = "minion", type = "Cache")
+class Cache(
+        @Id var cacheId: String,
+        var question: String = "",
+        var answer: String = ""
 )
