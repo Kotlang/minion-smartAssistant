@@ -4,7 +4,7 @@ import co.flock.model.event.*
 import com.fasterxml.jackson.annotation.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kotlang.minion.beans.MessageAction
-import com.kotlang.minion.flockHandler.Router
+import com.kotlang.minion.flockHandler.FlockRouter
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -22,7 +22,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
  */
 @RestController
 @RequestMapping("/flockapi")
-class FlockController(@Autowired val router: Router) {
+class FlockController(@Autowired val flockRouter: FlockRouter) {
     private val log = LoggerFactory.getLogger(FlockController::class.java)
 
     @PostMapping
@@ -30,7 +30,7 @@ class FlockController(@Autowired val router: Router) {
         log.info("Request:: \n" + ObjectMapper().writerWithDefaultPrettyPrinter()
                 .writeValueAsString(request))
 
-        router.route(request)
+        flockRouter.route(request)
         return ResponseEntity(HttpStatus.OK)
     }
 

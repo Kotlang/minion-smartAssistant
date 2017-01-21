@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory
  * Handles all flock requests
  */
 @Component
-class Router(@Autowired val userTokenRepository: UserTokenRepository) {
-    private val log = LoggerFactory.getLogger(Router::class.java)
+class FlockRouter(@Autowired val userTokenRepository: UserTokenRepository) {
+    private val log = LoggerFactory.getLogger(FlockRouter::class.java)
 
     fun route(request: FlockEvent): Unit {
         thread {
