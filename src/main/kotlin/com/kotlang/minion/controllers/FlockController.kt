@@ -1,20 +1,20 @@
 package com.kotlang.minion.controllers
 
+import co.flock.model.User
 import co.flock.model.event.*
+import com.auth0.jwt.JWT
 import com.fasterxml.jackson.annotation.*
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.kotlang.minion.beans.ChatReceiveMessageExt
 import com.kotlang.minion.beans.MessageAction
 import com.kotlang.minion.flockHandler.FlockRouter
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
+import org.springframework.web.bind.annotation.*
 
 
 /**
@@ -34,6 +34,16 @@ class FlockController(@Autowired val flockRouter: FlockRouter) {
         return ResponseEntity(HttpStatus.OK)
     }
 
+    @GetMapping("/teams")
+    fun getTeamMates(@RequestParam("flockValidationToken") token: String): ResponseEntity<Array<User>> {
+        val requestDetails = JWT.decode(token)?.claims
+        val userId: String? = requestDetails?.get("userId")?.asString()
+        when(userId) {
+            null -> return ResponseEntity(HttpStatus.NOT_FOUND)
+            else -> return ResponseEntity(flockRouter.getTeamMembers(userId), HttpStatus.OK)
+        }
+    }
+
     @Bean
     fun jacksonBuilder(): Jackson2ObjectMapperBuilder {
         val mapper = Jackson2ObjectMapperBuilder()
@@ -50,7 +60,7 @@ class FlockController(@Autowired val flockRouter: FlockRouter) {
     @JsonSubTypes(
             JsonSubTypes.Type(value = AppInstall::class, name = "app.install"),
             JsonSubTypes.Type(value = AppUnInstall::class, name = "app.uninstall"),
-            JsonSubTypes.Type(value = ChatReceiveMessage::class, name = "chat.receiveMessage"),
+            JsonSubTypes.Type(value = ChatReceiveMessageExt::class, name = "chat.receiveMessage"),
             JsonSubTypes.Type(value = FlockMLAction::class, name = "client.flockmlAction"),
             JsonSubTypes.Type(value = OpenAttachmentWidget::class, name = "client.openAttachmentWidget"),
             JsonSubTypes.Type(value = PressButton::class, name = "client.pressButton"),

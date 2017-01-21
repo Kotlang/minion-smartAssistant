@@ -15,3 +15,7 @@ class MessageAction (
 
 // Extending message to make it compatible with jackson
 class MessageExt: Message("", "")
+
+class ChatReceiveMessageExt(
+        var message: MessageExt = MessageExt()
+): FlockEvent()

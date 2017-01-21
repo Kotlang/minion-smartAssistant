@@ -1,9 +1,11 @@
 package com.kotlang.minion.flockHandler
 
+import co.flock.model.User
 import co.flock.model.event.AppInstall
 import co.flock.model.event.AppUnInstall
 import co.flock.model.event.FlockEvent
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.kotlang.minion.beans.ChatReceiveMessageExt
 import com.kotlang.minion.beans.MessageAction
 import com.kotlang.minion.models.UserToken
 import com.kotlang.minion.repositories.UserTokenRepository
@@ -43,7 +45,20 @@ class FlockRouter(@Autowired val userTokenRepository: UserTokenRepository) {
                     log.info("Messages are : \n" + ObjectMapper().writerWithDefaultPrettyPrinter()
                             .writeValueAsString(messages))
                 }
+
+                is ChatReceiveMessageExt -> {
+                    if (request.message.attachments.isNotEmpty()) {
+
+                    }
+                }
             }
         }
+    }
+
+    fun getTeamMembers(userId: String): Array<User> {
+        val userToken = userTokenRepository.findOne(userId)
+        val flockApiClient = UniFlockApiClient(userToken.token)
+
+        return flockApiClient.fetchMembers()
     }
 }

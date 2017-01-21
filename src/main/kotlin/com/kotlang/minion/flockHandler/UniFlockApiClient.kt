@@ -1,6 +1,7 @@
 package com.kotlang.minion.flockHandler
 
 import co.flock.model.Group
+import co.flock.model.User
 import co.flock.model.message.Message
 import com.mashape.unirest.http.Unirest
 import com.fasterxml.jackson.core.JsonProcessingException
@@ -61,6 +62,13 @@ class UniFlockApiClient(private val userToken: String) {
                 .queryString("token", userToken)
                 .body(mapOf("chat" to chat, "uids" to uids))
                 .asObject(Array<MessageExt>::class.java)
+        return response.body
+    }
+
+    fun fetchMembers(): Array<User> {
+        val response = Unirest.get(apiEndPoint + "roster.listContacts")
+                .queryString("token", userToken)
+                .asObject(Array<User>::class.java)
         return response.body
     }
 }
