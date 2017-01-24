@@ -7,3 +7,6 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 
 spring.datasource.testWhileIdle = true
 spring.datasource.validationQuery = SELECT 1
+
+flock.bot.userId = u:abc
+flock.bot.token = xyz

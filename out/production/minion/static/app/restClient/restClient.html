@@ -1,0 +1,46 @@
+<md-content class="config">
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools">
+            <h2>
+                <span>Config</span>
+            </h2>
+
+            <span flex></span>
+        </div>
+    </md-toolbar>
+
+    <md-content style="padding: 30px">
+        <form ng-submit="fireHttpRequest()">
+
+            <div layout="row">
+                <md-input-container flex="15">
+                    <label>Http Method</label>
+                    <md-select name="type" ng-model="client.method" required>
+                        <md-option value="GET" selected>GET</md-option>
+                        <md-option value="POST">POST</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex="75">
+                    <label>URL</label>
+                    <input required md-no-asterisk name="url" ng-model="client.url">
+                </md-input-container>
+
+                <md-content flex="10" style="padding-left: 30px">
+                    <md-button type="submit" class="md-raised md-primary">Send</md-button>
+                </md-content>
+            </div>
+
+            <div layout="row">
+                <md-input-container flex="100" style="margin-right:70px">
+                    <label>Body</label>
+                    <textarea rows="15" ng-disabled="client.method==='GET'"
+                              ng-model="client.body"
+                              style="border-width: 2px"></textarea>
+                </md-input-container>
+            </div>
+        </form>
+
+    </md-content>
+
+</md-content>

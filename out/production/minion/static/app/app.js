@@ -11,6 +11,12 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   $routeProvider.otherwise({redirectTo: '/config'});
 }])
 
+.config(function($httpProvider) {
+    $httpProvider.defaults.headers.get = {};
+    $httpProvider.defaults.headers.put = {};
+    $httpProvider.defaults.headers.post = {};
+})
+
 .config(function($mdThemingProvider) {
         var customPrimary = {
             '50': '#fb3f3f',
