@@ -19,22 +19,20 @@ class FlockRouter(@Autowired val teamService: TeamService) {
     private val log = LoggerFactory.getLogger(FlockRouter::class.java)
 
     fun route(request: FlockEvent): Unit {
-        thread {
-            when (request) {
-                is AppInstall -> {
-                    log.info("Creating team")
-                    teamService.createTeam(request.userToken)
-                }
+        when (request) {
+            is AppInstall -> {
+                log.info("Creating team")
+                teamService.createTeam(request.userToken)
+            }
 
-                is AppUnInstall -> {
-                    log.info("Removing user token")
-                    teamService.deleteTeam(request.userId)
-                }
+            is AppUnInstall -> {
+                log.info("Removing user token")
+                teamService.deleteTeam(request.userId)
+            }
 
-                is ChatReceiveMessageExt -> {
-                    if (request.message.attachments.isNotEmpty()) {
+            is ChatReceiveMessageExt -> {
+                if (request.message.attachments.isNotEmpty()) {
 
-                    }
                 }
             }
         }

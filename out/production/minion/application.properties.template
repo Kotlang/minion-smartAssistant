@@ -3,10 +3,10 @@ spring.jpa.hibernate.ddl-auto = update
 spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/minion
 spring.datasource.username=abc
 spring.datasource.password=xyz
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.database-platform=team.hibernate.dialect.PostgreSQLDialect
 
 spring.datasource.testWhileIdle = true
 spring.datasource.validationQuery = SELECT 1
 
 flock.bot.userId = u:abc
-flock.bot.token = xyz
+flock.bot.userToken = xyz

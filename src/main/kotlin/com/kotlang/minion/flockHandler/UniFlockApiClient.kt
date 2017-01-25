@@ -35,11 +35,17 @@ class UniFlockApiClient(private val userToken: String) {
     fun fetchMembers() =
             Unirest.get(apiEndPoint + "roster.listContacts")
                 .queryString("token", userToken)
-                .asObject(Array<UserExt>::class.java).body
+                .asObjectAsync(Array<UserExt>::class.java)
 
     fun getUserInfo() =
             Unirest.get(apiEndPoint + "users.getInfo")
                 .queryString("token", userToken)
-                .asObject(UserExt::class.java).body
+                .asObjectAsync(UserExt::class.java)
+
+    fun getGroupMembers(groupId: String) =
+            Unirest.get(apiEndPoint + "groups.getMembers")
+                    .queryString("token", userToken)
+                    .queryString("groupId", groupId)
+                    .asObject(Array<UserExt>::class.java).body
 
 }

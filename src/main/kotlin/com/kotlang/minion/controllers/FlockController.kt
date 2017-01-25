@@ -41,4 +41,10 @@ class FlockController(@Autowired val flockRouter: FlockRouter,
             else -> return ResponseEntity(teamService.getTeamMembers(userId), HttpStatus.OK)
         }
     }
+
+    @GetMapping("/members")
+    fun getTeamForUser(@RequestParam("chatId") chatId: String,
+                       @RequestParam("userId") userId: String): List<FlockUser> {
+        return teamService.getChatMembers(chatId, userId)
+    }
 }

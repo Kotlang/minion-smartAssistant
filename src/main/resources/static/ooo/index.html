@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="ooo" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="ooo" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="ooo" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="ooo" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Minion</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body ng-controller="root">
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<md-content class="config">
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools">
+            <h2>
+                <span>My Team</span>
+            </h2>
+
+            <span flex></span>
+        </div>
+    </md-toolbar>
+
+    <md-content style="padding: 30px">
+        <md-list flex>
+            <md-list-item class="md-2-line" ng-repeat="user in team">
+                <img ng-src="https://i.flockusercontent2.com/default-114.png" class="md-avatar" />
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{user.firstName + " " + user.lastName}}</h3>
+                    <h4>OOO</h4>
+                </div>
+                <md-divider ></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-content>
+
+</md-content>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-aria.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
+<script src="../api.js"></script>
+<script src="../util.js"></script>
+
+<script>
+    angular.module('ooo', ['ngMaterial', 'APIFactory'])
+        .controller('root', function($scope, API, $location) {
+            var queryParams = window.utils.getQueryParams();
+            var flockEvent = JSON.parse(queryParams["flockEvent"])
+            var chatId = flockEvent.chat;
+            var userId = flockEvent.userId;
+            $scope.team = [];
+
+            API.getTeam(chatId, userId).then(function(members) { $scope.team = members; });
+        });
+</script>
+
+
+</body>
+</html>

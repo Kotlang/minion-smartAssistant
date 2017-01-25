@@ -18,8 +18,12 @@ class TeamService (@Autowired val userRepository: FlockUserRepository,
     fun createTeam(token: String) {
         val client = UniFlockApiClient(token)
 
+        // get async responses
+        val adminInfoResponse = client.getUserInfo()
+        val teamMembersResponse = client.fetchMembers()
+
         //get complete info of user
-        val adminInfo = client.getUserInfo()
+        val adminInfo = adminInfoResponse.get().body
         adminInfo.token = token
 
         //create team
@@ -27,7 +31,7 @@ class TeamService (@Autowired val userRepository: FlockUserRepository,
         teamRepository.save(team)
 
         //get other users of team
-        val teamMembers = client.fetchMembers().toMutableList()
+        val teamMembers = teamMembersResponse.get().body.toMutableList()
         teamMembers.add(adminInfo)
 
         teamMembers.forEach {
@@ -40,6 +44,31 @@ class TeamService (@Autowired val userRepository: FlockUserRepository,
     fun deleteTeam(adminUserId: String) {
         val admin = userRepository.findOne(adminUserId)
         teamRepository.delete(admin.team)
+    }
+
+    /**
+     * Returns chat members in chat
+     * Chat members are our entities instead of flock entities
+     */
+    fun getChatMembers(chatId: String, userId: String): List<FlockUser> {
+        val isGroup = chatId.startsWith("g:")
+
+        val users: List<FlockUser>
+        if (isGroup) {
+            // get a token
+            // we would be having token for only one of the member who installed app
+            val teamMembers = userRepository.findTeamMembers(userId)
+            val userToken = teamMembers.map { it.token }.filterNotNull().first()
+            val client = UniFlockApiClient(userToken)
+
+            val groupMembers = client.getGroupMembers(chatId)
+            val userIds = groupMembers.map { it.id }
+            users = userRepository.findAll(userIds)
+        } else {
+            users = listOf(userRepository.findOne(chatId))
+        }
+
+        return users
     }
 
     fun getTeamMembers(userId: String) = userRepository.findTeamMembers(userId)
