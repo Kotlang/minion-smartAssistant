@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="bookme" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="bookme" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="bookme" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="bookme" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="config" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="config" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="config" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="config" class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,27 +12,48 @@
     <!-- Latest compiled and minified CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css">
-    <link rel="stylesheet" href="index.css">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
-<body>
+<body ng-controller="root">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div ng-view></div>
+<md-content class="config">
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools">
+            <h2>
+                <span>Config</span>
+            </h2>
 
+            <span flex></span>
+        </div>
+    </md-toolbar>
 
+    <md-content style="padding: 30px">
+        Welcome to Minion HR Asst app. With HR asst app you can use flock to:
+        <ul>
+            <li>Manage Employee Leaves</li>
+            <li>Manage Reimbursements smartly by Auto Analysis of bills</li>
+        </ul>
+    </md-content>
+
+</md-content>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-aria.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
+<script src="../api.js"></script>
+<script src="../util.js"></script>
 
-<script src="app/app.js"></script>
-<script src="app/api.js"></script>
-<script src="app/config/config.js"></script>
-<script src="app/ooo/ooo.js"></script>
+<script>
+    angular.module('config', ['ngMaterial', 'APIFactory'])
+        .controller('root', function($scope, API) {
+
+        });
+</script>
+
+
 </body>
 </html>
