@@ -1,5 +1,7 @@
 package com.kotlang.minion.models
 
+import java.sql.Date
+import java.util.*
 import javax.persistence.*
 
 /**
@@ -22,4 +24,14 @@ class FlockUser(
         var lastName: String = "",
         @Column(unique = true) var email: String? = null,
         @ManyToOne var team: Team? = null
+)
+
+@Entity
+class OutOfOfficeDetails (
+        @Id @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO) var id: Long = 0,
+        var fromDate: Date = Date(Calendar.getInstance().time.time),
+        var toDate: Date = Date(Calendar.getInstance().time.time),
+        var isApproved: Boolean = false,
+        @ManyToOne var applicant: FlockUser? = null,
+        @ManyToOne var approver: FlockUser? = null
 )

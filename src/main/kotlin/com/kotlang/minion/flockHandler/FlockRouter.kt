@@ -31,9 +31,9 @@ class FlockRouter(@Autowired val teamService: TeamService) {
             }
 
             is ChatReceiveMessageExt -> {
-                if (request.message.attachments.isNotEmpty()) {
+                val input = request.message.text
+                val applicant = request.message.from
 
-                }
             }
         }
     }
